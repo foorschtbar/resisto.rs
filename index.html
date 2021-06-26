@@ -19,7 +19,8 @@
     <div id="resistor-stripe-4-2" class="resistor-stripe"></div>
     <div id="resistor-stripe-4-3" class="resistor-stripe"></div>
     <div id="resistor-stripe-4-4" class="resistor-stripe">&nbsp;<br>&nbsp;</div>
-    <div class="resistor-stripe-tolerance resistor-stripe" style="color: #000; background-color: #cfb53b">gold<br>&plusmn;5%</div>
+    <div class="resistor-stripe-tolerance resistor-stripe" style="color: #000; background-color: #cfb53b">
+      gold<br>&plusmn;5%</div>
   </div>
   <h2>five bands</h2>
   <div class="resistor-diagram resistor-diagram-5">
@@ -27,12 +28,13 @@
     <div id="resistor-stripe-5-2" class="resistor-stripe"></div>
     <div id="resistor-stripe-5-3" class="resistor-stripe"></div>
     <div id="resistor-stripe-5-4" class="resistor-stripe"></div>
-    <div class="resistor-stripe-tolerance resistor-stripe" style="color: #fff; background-color: #964b00">brown<br>&plusmn;1%</div>
+    <div class="resistor-stripe-tolerance resistor-stripe" style="color: #fff; background-color: #964b00">
+      brown<br>&plusmn;1%</div>
   </div>
   <h2>surface mount</h2>
   <div id="resistor-smt-3" class="resistor-smt"></div>
-  <!--
   <div id="resistor-smt-4" class="resistor-smt"></div>
+  <!--
   <div id="resistor-smt-eia96" class="resistor-smt"></div>
   -->
 </div>
@@ -43,11 +45,10 @@
   <a href="https://github.com/joewalnes/resisto.rs/" target="_blank">fork me on github</a>.
 </footer>
 
-<script src="analytics.js"></script>
 <script src="resistors.js"></script>
 <script>
-  var queryEl  = document.getElementById('resistor-query'),
-  resultEl = document.getElementById('resistor-result');
+  var queryEl = document.getElementById('resistor-query'),
+    resultEl = document.getElementById('resistor-result');
   function showStripes(colors, prefix) {
     for (var i = 0; i < colors.length; i++) {
       var color = colors[i];
@@ -67,7 +68,7 @@
       stripeEl.innerHTML = text;
     }
   }
-  queryEl.onchange = queryEl.onkeyup = function() {
+  queryEl.onchange = queryEl.onkeyup = function () {
     location.hash = encodeURIComponent(queryEl.value);
     var result = resistors.query(queryEl.value);
     if (result) {
@@ -75,7 +76,7 @@
       showStripes(result.colors4, '4');
       showStripes(result.colors5, '5');
       document.getElementById('resistor-smt-3').innerHTML = result.smt3;
-      //document.getElementById('resistor-smt-4').innerHTML = result.smt4;
+      document.getElementById('resistor-smt-4').innerHTML = result.smt4;
       //document.getElementById('resistor-smt-eia96').innerHTML = result.smtEia96;
     } else {
       resultEl.style.display = 'none';
@@ -85,7 +86,7 @@
     queryEl.value = decodeURIComponent(location.hash.substring(1));
     queryEl.onchange();
   }
-  window.onhashchange = function() {
+  window.onhashchange = function () {
     queryEl.value = decodeURIComponent(location.hash.substring(1));
     queryEl.onchange();
   };

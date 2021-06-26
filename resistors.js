@@ -8,18 +8,18 @@ var resistors = {};
 // These hex codes came from
 // http://en.wikipedia.org/wiki/Electronic_color_code
 resistors.digitsToColors = {
-  '-2': {hex: '#c0c0c0', label: '#000', name: 'silver',              multiplier: '0.01'},
-  '-1': {hex: '#cfb53b', label: '#000', name: 'gold'  ,              multiplier: '0.1'},
-  '0' : {hex: '#000000', label: '#fff', name: 'black' , figure: '0'},
-  '1' : {hex: '#964b00', label: '#fff', name: 'brown' , figure: '1', multiplier: '10'},
-  '2' : {hex: '#ff0000', label: '#fff', name: 'red'   , figure: '2', multiplier: '100'},
-  '3' : {hex: '#ffa500', label: '#000', name: 'orange', figure: '3', multiplier: '1K'},
-  '4' : {hex: '#ffff00', label: '#000', name: 'yellow', figure: '4', multiplier: '10K'},
-  '5' : {hex: '#9acd32', label: '#000', name: 'green' , figure: '5', multiplier: '100K'},
-  '6' : {hex: '#6495ed', label: '#000', name: 'blue'  , figure: '6', multiplier: '1M'},
-  '7' : {hex: '#ee82ee', label: '#000', name: 'purple', figure: '7', multiplier: '10M'},
-  '8' : {hex: '#a0a0a0', label: '#000', name: 'gray'  , figure: '8', multiplier: '100M'},
-  '9' : {hex: '#ffffff', label: '#000', name: 'white' , figure: '9', multiplier: '1000M'}
+  '-2': { hex: '#c0c0c0', label: '#000', name: 'silver', multiplier: '0.01' },
+  '-1': { hex: '#cfb53b', label: '#000', name: 'gold', multiplier: '0.1' },
+  '0': { hex: '#000000', label: '#fff', name: 'black', figure: '0' },
+  '1': { hex: '#964b00', label: '#fff', name: 'brown', figure: '1', multiplier: '10' },
+  '2': { hex: '#ff0000', label: '#fff', name: 'red', figure: '2', multiplier: '100' },
+  '3': { hex: '#ffa500', label: '#000', name: 'orange', figure: '3', multiplier: '1K' },
+  '4': { hex: '#ffff00', label: '#000', name: 'yellow', figure: '4', multiplier: '10K' },
+  '5': { hex: '#9acd32', label: '#000', name: 'green', figure: '5', multiplier: '100K' },
+  '6': { hex: '#6495ed', label: '#000', name: 'blue', figure: '6', multiplier: '1M' },
+  '7': { hex: '#ee82ee', label: '#000', name: 'purple', figure: '7', multiplier: '10M' },
+  '8': { hex: '#a0a0a0', label: '#000', name: 'gray', figure: '8', multiplier: '100M' },
+  '9': { hex: '#ffffff', label: '#000', name: 'white', figure: '9', multiplier: '1000M' }
 };
 
 /**
@@ -43,11 +43,11 @@ resistors.digitsToColors = {
  *   ]
  * }
  */
-resistors.query = function(input) {
+resistors.query = function (input) {
   input = input.replace(/ +?/g, '')
-               .replace(/ohm[s]?/, '')
-               .replace(/\u2126/, '')
-               .replace(/\.$/, '');
+    .replace(/ohm[s]?/, '')
+    .replace(/\u2126/, '')
+    .replace(/\.$/, '');
   var value = this.parseValue(input);
   if (value !== null) {
     value = this.roundToSignificantPlaces(value, 3);
@@ -55,17 +55,17 @@ resistors.query = function(input) {
       var colors5 = this.numberTo5ColorDigits(value);
       var colors4 = this.numberTo4ColorDigits(value);
       var smt3 = value < 10 ? colors4[0].toString() : colors4.join('');
-      //var smt4 = colors5.join('');
+      var smt4 = colors5.join('');
       //var smtEia96 = colors5.join('');
       var self = this;
       return {
         value: value,
         smt3: smt3,
-        //smt4: smt4,
+        smt4: smt4,
         //smtEia96: smtEia96,
         formatted: this.formatValue(value),
-        colors5: colors5.map(function(d) { return self.digitsToColors[d] }),
-        colors4: colors4.map(function(d) { return self.digitsToColors[d] }),
+        colors5: colors5.map(function (d) { return self.digitsToColors[d] }),
+        colors4: colors4.map(function (d) { return self.digitsToColors[d] }),
       };
     }
   }
@@ -76,7 +76,7 @@ resistors.query = function(input) {
  * Given ohm rating as string (e.g. 3.2m or 3M2), return
  * integer value (e.g. 3200000).
  */
-resistors.parseValue = function(input) {
+resistors.parseValue = function (input) {
   var multiplier = 1;
   var match;
   if (match = input.match(/^(\d+)(\.(\d+))?([km])?$/i)) {
@@ -113,7 +113,7 @@ resistors.parseValue = function(input) {
  * e.g. (123456789, 3) -> 123000000)
  *     (0.0045678, 3) -> 0.00457)
  */
-resistors.roundToSignificantPlaces = function(value, significant) {
+resistors.roundToSignificantPlaces = function (value, significant) {
   if (!value) {
     return 0;
   }
@@ -125,7 +125,7 @@ resistors.roundToSignificantPlaces = function(value, significant) {
  * Given ohm rating as integer (e.g. 470000), return
  * array of color digits (e.g. 4, 7, 0, 3). See digitsTo_Colors.
  */
-resistors.numberTo5ColorDigits = function(value) {
+resistors.numberTo5ColorDigits = function (value) {
   if (!value) {
     return [0, 0, 0, 0]; // Special case
   }
@@ -146,7 +146,7 @@ resistors.numberTo5ColorDigits = function(value) {
  * Given ohm rating as integer (e.g. 470000), return
  * array of color digits (e.g. 4, 7, 0, 3). See digitsTo_Colors.
  */
-resistors.numberTo4ColorDigits = function(value) {
+resistors.numberTo4ColorDigits = function (value) {
   if (!value) {
     return [0, 0, 0]; // Special case
   }
@@ -165,7 +165,7 @@ resistors.numberTo4ColorDigits = function(value) {
 /**
  * Given a numeric value, format it like '3.2M' etc.
  */
-resistors.formatValue = function(value) {
+resistors.formatValue = function (value) {
   if (value >= 1000000) {
     return (value / 1000000) + 'M';
   } else if (value >= 1000) {
